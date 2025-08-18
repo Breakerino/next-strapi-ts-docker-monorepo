@@ -1,0 +1,41 @@
+{
+  "name": "next-strapi-ts-docker-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "Breakerino",
+    "email": "hello@breakerino.me",
+    "url": "https://breakerino.me"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*/*"
+    ]
+  },
+  "devDependencies": {
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": ">=18",
+    "yarn": ">=1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Breakerino/next-strapi-ts-docker-monorepo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Breakerino/next-strapi-ts-docker-monorepo/issues"
+  },
+  "homepage": "https://github.com/Breakerino/next-strapi-ts-docker-monorepo#readme",
+  "keywords": [
+    "nextjs",
+    "strapi",
+    "typescript",
+    "docker",
+    "react",
+    "starter",
+    "monorepo"
+  ]
+}
