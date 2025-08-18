@@ -1,10 +1,31 @@
+// --------------------------------------------------------------------- 
+// Pages > Index
+// --------------------------------------------------------------------- 
+
+
+// --------------------------------------------------------------------- 
 import Image from "next/image";
 import Head from 'next/head';
+import { GetServerSideProps } from 'next';
+// --------------------------------------------------------------------- 
+
+// --------------------------------------------------------------------- 
+import { useApi } from '@/app/api';
+// --------------------------------------------------------------------- 
+
+// --------------------------------------------------------------------- 
 import "./index.scss";
+// --------------------------------------------------------------------- 
+
+type IndexProps = {
+	text: string;
+};
+
+export default function Index({text}: IndexProps) {
 	return (
 		<>
 			<Head>
-				<title>Next.js + TypeScript + Docker</title>
+				<title>{text}</title>
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
@@ -22,7 +43,7 @@ import "./index.scss";
 								priority
 							/>
 						</a>
-						<h1>Strapi + 	TypeScript + Docker</h1>
+						<h1>{text}</h1>
 					</div>
 				</main>
 				<footer>
@@ -47,4 +68,25 @@ import "./index.scss";
 	);
 }
 
-export default Index;
+export const getServerSideProps: GetServerSideProps = async () => {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const api = useApi();
+	
+	try {
+		const response = await api.getData();
+		
+		return {
+			props: {
+				text: response?.data?.data?.text ?? null
+			}
+		}
+	} catch (error) {
+		console.error(error)
+		
+		return {
+			props: {
+				text: null
+			}
+		}
+	}
+};
