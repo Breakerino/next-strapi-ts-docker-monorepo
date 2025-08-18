@@ -1,0 +1,18 @@
+// --------------------------------------------------------------------- 
+// Api > Endpoints
+// --------------------------------------------------------------------- 
+
+// --------------------------------------------------------------------- 
+import { EndpointsArgs } from './index';
+// --------------------------------------------------------------------- 
+
+type EndpointName = 'getData';
+
+const endpoints: Record<EndpointName, EndpointsArgs> = {
+	getData: {
+		url: '/breakerino/data',
+		method: 'GET'
+	},
+};
+
+export default endpoints;
