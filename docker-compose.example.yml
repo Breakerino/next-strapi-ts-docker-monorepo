@@ -11,8 +11,6 @@ services:
       - APP_SERVER_NAME=${APP_SERVER_NAME}
       - APP_SERVER_PORT=${APP_SERVER_PORT}
       - API_BASE_URL=${API_SERVER_PROTOCOL}://${API_SERVER_NAME}
-    volumes:
-      - app-modules:/app/node_modules
     networks:
       - main
       - internal
@@ -83,9 +81,6 @@ networks:
     driver: bridge
 
 volumes:
-  app-modules:
-    name: ${PROJECT_NAME}_app-modules_${PROJECT_ENV}
-    driver: local
   strapi-modules:
     name: ${PROJECT_NAME}_strapi-modules_${PROJECT_ENV}
     driver: local
