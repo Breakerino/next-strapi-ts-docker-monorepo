@@ -3,7 +3,9 @@
 // --------------------------------------------------------------------- 
 
 const config = {
-	baseURL: process.env.API_BASE_URL,
+	baseURL: typeof window !== 'undefined'
+		? process.env.API_PUBLIC_BASE_URL
+		: process.env.API_INTERNAL_BASE_URL,
 	headers: {
 		'Content-Type': 'application/json'
 	}
