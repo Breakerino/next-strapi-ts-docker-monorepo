@@ -12,8 +12,8 @@ import useLogger from '@/hooks/useLogger';
 // --------------------------------------------------------------------- 
 
 // --------------------------------------------------------------------- 
-import config from './config';
-import endpoints from './endpoints';
+import config from '../config';
+import endpoints from '../endpoints';
 // --------------------------------------------------------------------- 
 
 declare global {
