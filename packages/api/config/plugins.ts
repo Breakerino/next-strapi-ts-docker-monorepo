@@ -2,4 +2,10 @@
 // Config > Plugins
 // --------------------------------------------------------------------- 
 
-export default () => ({});
+export default ({ env }) => ({
+  'users-permissions': {
+    config: {
+      jwtSecret: env('API_JWT_SECRET'),
+    },
+  },
+});
