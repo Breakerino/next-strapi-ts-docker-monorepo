@@ -1,7 +1,7 @@
 # --------------------------------------------------
-# Dependencies (use local yarn install to avoid ETIMEDOUT)
+# Dependencies
 # --------------------------------------------------
-FROM node:18-alpine3.18 AS deps
+FROM node:22-alpine AS deps
 
 WORKDIR /srv/app
 
@@ -31,7 +31,7 @@ RUN yarn config set registry https://registry.npmjs.org/ \
 # --------------------------------------------------
 # Builder
 # --------------------------------------------------
-FROM node:18-alpine3.18 AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /srv/app
 
@@ -50,14 +50,14 @@ RUN yarn install --frozen-lockfile --production --ignore-scripts --prefer-offlin
 # --------------------------------------------------
 # Production runner
 # --------------------------------------------------
-FROM node:18-alpine3.18 AS runner-prod
+FROM node:22-alpine AS runner-prod
 
 WORKDIR /srv/app
 
 RUN apk add --no-cache tini vips
 
 ENV NODE_ENV=production \
-		STRAPI_TELEMETRY_DISABLED=true |
+		STRAPI_TELEMETRY_DISABLED=true \
 		BROWSER=false
 
 # Copy only what's needed
