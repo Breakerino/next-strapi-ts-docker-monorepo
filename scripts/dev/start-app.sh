@@ -24,4 +24,4 @@ set +a
 yarn install
 
 # Start the development server with Turbopack, using the specified port and hostname from environment variables.
-yarn dev --turbopack --port ${APP_SERVER_PORT} --hostname ${APP_SERVER_HOST}
+yarn dev --turbopack --port ${APP_PORT} --hostname ${APP_HOST}

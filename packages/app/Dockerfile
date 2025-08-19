@@ -47,8 +47,8 @@ RUN yarn build
 FROM base AS runner
 
 # 1. Environment defaults (overridable)
-ENV APP_SERVER_HOST="0.0.0.0" \
-	APP_SERVER_PORT=3000 \
+ENV APP_HOST="0.0.0.0" \
+	APP_PORT=3000 \
 	APP_SERVER_PROTOCOL="http" \
 	APP_SERVER_NAME="nextjs.local"
 
@@ -76,10 +76,10 @@ COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 USER nextjs
 
 # 6. Expose port
-EXPOSE ${APP_SERVER_PORT}
+EXPOSE ${APP_PORT}
 
 # 7. Start Next.js server
-CMD HOSTNAME=${APP_SERVER_HOST} PORT=${APP_SERVER_PORT} node server.js
+CMD HOSTNAME=${APP_HOST} PORT=${APP_PORT} node server.js
 
 # --------------------------------------------------
 # Development runner
@@ -97,7 +97,7 @@ COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 
 # 4. Expose port
-EXPOSE ${APP_SERVER_PORT}
+EXPOSE ${APP_PORT}
 
 # 5. Start Next.js in development mode (Turbopack enabled)
-CMD ["sh", "-c", "yarn dev --turbopack --port ${APP_SERVER_PORT} --hostname ${APP_SERVER_HOST}"]
+CMD ["sh", "-c", "yarn dev --turbopack --port ${APP_PORT} --hostname ${APP_HOST}"]
