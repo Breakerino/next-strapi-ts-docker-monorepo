@@ -1,4 +1,4 @@
-.PHONY: start stop restart build start-app-dev start-api-dev
+.PHONY: start stop restart build force-build start-app-dev start-api-dev
 
 start:
 	bash scripts/prod/start.sh
@@ -14,12 +14,12 @@ restart:
 
 build:
 	bash scripts/prod/build.sh
+	
+force-build:
+	bash scripts/prod/build.sh --force
 
 start-app-dev:
 	bash scripts/dev/start-app.sh
 
 start-api-dev:
 	bash scripts/dev/start-api.sh
-	
-force-start-api-dev:
-	bash scripts/dev/start-api.sh --force
