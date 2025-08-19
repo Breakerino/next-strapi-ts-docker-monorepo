@@ -1,3 +1,7 @@
+// --------------------------------------------------------------------- 
+// Config > Admin
+// --------------------------------------------------------------------- 
+
 export default ({ env }) => {
 	const ADMIN_SERVER_PROTOCOL = env('ADMIN_SERVER_PROTOCOL', null)
 	const ADMIN_SERVER_NAME = env('ADMIN_SERVER_NAME', null)

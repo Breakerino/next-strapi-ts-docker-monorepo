@@ -1,4 +1,6 @@
-import path from 'path';
+// --------------------------------------------------------------------- 
+// Config > Database
+// --------------------------------------------------------------------- 
 
 export default ({ env }) => {
   const client = env('DATABASE_CLIENT', 'sqlite');

@@ -1,3 +1,7 @@
+// --------------------------------------------------------------------- 
+// Config > Server
+// --------------------------------------------------------------------- 
+
 export default ({ env }) => {
 	const API_SERVER_PROTOCOL = env('API_SERVER_PROTOCOL', null)
 	const API_SERVER_NAME = env('API_SERVER_NAME', null)
