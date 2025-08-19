@@ -1,7 +1,7 @@
 # --------------------------------------------------
 # Base
 # --------------------------------------------------
-FROM node:20-alpine3.19 AS base
+FROM node:22-alpine AS base
 
 # 1. Install system dependencies
 RUN apk add --no-cache libc6-compat
@@ -25,7 +25,6 @@ RUN --mount=type=cache,id=yarn,sharing=locked,target=/usr/local/share/.cache/yar
 	else echo "Lockfile not found." && exit 1; \
 	fi
 
-
 # --------------------------------------------------
 # Builder
 # --------------------------------------------------
@@ -39,12 +38,11 @@ COPY --from=deps /app/yarn.lock ./yarn.lock
 # 2. Copy source code
 COPY . .
 
-# 3. Build Next.js app
+# 3. Build Next.js app (standalone output)
 RUN yarn build
 
-
 # --------------------------------------------------
-# Runner (common base for prod/dev)
+# Runner
 # --------------------------------------------------
 FROM base AS runner
 
@@ -67,19 +65,21 @@ ENV NODE_ENV=production \
 RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
 
 # 3. Copy production build artifacts
-COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# 4. Switch to non-root user
+# 4. Copy runtime node_modules
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
+
+# 5. Switch to non-root user
 USER nextjs
 
-# 5. Expose port
+# 6. Expose port
 EXPOSE ${APP_SERVER_PORT}
 
-# 6. Start Next.js server
+# 7. Start Next.js server
 CMD HOSTNAME=${APP_SERVER_HOST} PORT=${APP_SERVER_PORT} node server.js
-
 
 # --------------------------------------------------
 # Development runner
@@ -88,7 +88,7 @@ FROM runner AS runner-dev
 
 # 1. Set development env
 ENV NODE_ENV=development \
-		NEXT_TELEMETRY_DISABLED=1
+	NEXT_TELEMETRY_DISABLED=1
 
 # 2. Copy source code
 COPY . .
