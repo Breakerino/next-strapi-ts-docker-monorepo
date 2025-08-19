@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------- 
-// Server
+// Api > Server
 // --------------------------------------------------------------------- 
 
 // --------------------------------------------------------------------- 
@@ -14,6 +14,7 @@ import useLogger from '@/hooks/useLogger';
 // --------------------------------------------------------------------- 
 import config from '../config';
 import endpoints from '../endpoints';
+import { EndpointsArgs, RequestArgs } from '../types';
 // --------------------------------------------------------------------- 
 
 declare global {
@@ -21,28 +22,6 @@ declare global {
 		entries<T extends Record<PropertyKey, unknown>>(o: T): [keyof T, T[keyof T]][]
 	}
 }
-
-export interface EndpointsArgs extends RequestArgs {
-	url: string;
-	method: 'GET' | 'POST' | 'PUT' | 'DELETE',
-	transform?: {
-		request?: AxiosRequestTransformer,
-		response?: AxiosResponseTransformer,
-	}
-}
-
-export interface RequestArgs {
-	urlParams?: Record<string, string | number>,
-	params?: Record<string, string | number>,
-	data?: Record<string, unknown>,
-	headers?: Record<string, string>,
-	transform?: {
-		request?: AxiosRequestTransformer,
-		response?: AxiosResponseTransformer,
-	}
-}
-
-export type UseApiProps = unknown;
 
 const axios = Axios.create({ ...config });
 
