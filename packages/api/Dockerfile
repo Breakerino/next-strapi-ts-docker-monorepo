@@ -27,7 +27,6 @@ RUN yarn config set registry https://registry.npmjs.org/ \
 	&& yarn config set network-timeout 600000 -g \
 	&& yarn install --frozen-lockfile --prefer-offline
 
-
 # --------------------------------------------------
 # Builder
 # --------------------------------------------------
@@ -46,7 +45,6 @@ COPY . .
 # Prune to production dependencies only
 RUN yarn install --frozen-lockfile --production --ignore-scripts --prefer-offline
 
-
 # --------------------------------------------------
 # Production runner
 # --------------------------------------------------
@@ -64,14 +62,10 @@ ENV NODE_ENV=production \
 COPY --from=builder /srv/app/package.json ./package.json
 COPY --from=builder /srv/app/yarn.lock ./yarn.lock
 COPY --from=builder /srv/app/node_modules ./node_modules
-#COPY --from=builder /srv/app/build ./build
 COPY --from=builder /srv/app/src ./src
 COPY --from=builder /srv/app/config ./config
-#COPY --from=builder /srv/app/public ./public
 
-RUN mkdir -p /var/local/strapi /srv/app/public/uploads
-
-EXPOSE ${PORT}
+EXPOSE ${API_PORT}
 
 ENTRYPOINT ["/sbin/tini","--"]
 CMD ["yarn","start"]
